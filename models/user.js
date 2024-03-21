@@ -1,18 +1,19 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
+const {profileType} = require("../enum/index.js")
 
-const Schema = mongoose.Schema
+const Schema = mongoose.Schema;
 
-const userSchema = new  Schema({
-    email: { type:String, required: true, unique: true},
-    username: {type: String, required: true, unique : true },
-    dataOfBirth: Date,
-    password: String,
-    followers: [{type:mongoose.Types.ObjectId, ref :'users'}],
-    followings: [{type:mongoose.Types.ObjectId, ref :'users'}],
-    tweets: [{type:mongoose.Types.ObjectId, ref :'tweets'}],
-})
+const userSchema = new Schema({
+  email: { type: String, required: true, unique: true },
+  username: { type: String, required: true, unique: true },
+  dataOfBirth: Date,
+  password: String,
+  followers: [{ type: mongoose.Types.ObjectId, ref: "users" }],
+  followings: [{ type: mongoose.Types.ObjectId, ref: "users" }],
+  tweets: [{ type: mongoose.Types.ObjectId, ref: "tweets" }],
+  profileType: { type: String , enum: [profileType.SSO, profileType.NORMAL] }
+});
 
+const userModel = mongoose.model("users", userSchema);
 
-const userModel = mongoose.model("users", userSchema)
-
-module.exports = {userModel, userSchema}
+module.exports = { userModel, userSchema };

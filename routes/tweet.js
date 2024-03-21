@@ -1,14 +1,17 @@
 const express = require('express')
 const tweetRoute = express.Router()
 const { getTweetById , getAllTweets} = require("../controllers/tweetController.js")
+const {verifyToken} = require("../middlewares/index.js")
 
 // const {createUserValidator} = require('../validators/index.js')
 
 // const {handleValidation} = require('../middlewares/index.js')
 
-tweetRoute.get('/', getAllTweets );
+tweetRoute.get('/',
+// verifyToken, 
+getAllTweets );
 
-tweetRoute.get('/:id', getTweetById)
+tweetRoute.get('/:id',verifyToken, getTweetById)
 
 tweetRoute.post('/', (req, res) => {
     res.send('Hello World 2!')

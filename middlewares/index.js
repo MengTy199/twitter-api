@@ -1,33 +1,27 @@
-const { validationResult } = require('express-validator');
+const { validationResult } = require("express-validator")
+const jwt = require('jsonwebtoken');
+const asyncHandler = require("express-async-handler")
 
-function handleRequest(req, res, next) {
-    // Checking logic in req
-    const error = false
-    if (error) {
-        res.status(500).send("Error!")
-    }
-    next()
-}
-
-function authMiddleware(req, res, next) {
-    //Checking logic in req
-    const error = false
-    if (error) {
-        res.status(500).send("Error Auth!")
-    }
-    next()
-}
-
-function handleValidation(req, res, next) {
+const validationErrorHandler = async (req, res, next) => {
     const result = validationResult(req);
     if (result.isEmpty()) {
         next()
-    } else {
-        res.send({ errors: result.array() })
+    } else
+        return res.send({ errors: result.array() });
+}
+
+const verifyToken = asyncHandler(async (req, res, next) => {
+    //Check token
+    let token = req.header("Authorization")
+    if (!token) {
+        return res.status(401).json({ error: "Access Denied!" })
     }
+    // console.log(token)
+    token = token.replace("Bearer ", "")
+    const decoded = jwt.verify(token, process.env.SECRET)
+    // req.user = decoded
+    return res.json({ user: decoded })
+    // next()
+})
 
-}
-
-module.exports = {
-    handleRequest, authMiddleware, handleValidation
-}
+module.exports = { validationErrorHandler, verifyToken }
