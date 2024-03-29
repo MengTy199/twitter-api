@@ -19,6 +19,6 @@ router.delete("/:id", deleteById);
 
 router.put("/:id", updateById);
 
-router.get("/:userId/tweets", getTweetsByUserId);
+router.get("/:id/tweets", getTweetsByUserId);
 
 module.exports = router;

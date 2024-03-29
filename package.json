@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "nodemon app.js",
     "generate": "node utils/generate.js",
+    "link": "node utils/links-relationship.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const {profileType} = require("../enum/index.js")
 
 const Schema = mongoose.Schema;
 
@@ -11,7 +10,11 @@ const userSchema = new Schema({
   followers: [{ type: mongoose.Types.ObjectId, ref: "users" }],
   followings: [{ type: mongoose.Types.ObjectId, ref: "users" }],
   tweets: [{ type: mongoose.Types.ObjectId, ref: "tweets" }],
-  profileType: { type: String , enum: [profileType.SSO, profileType.NORMAL] }
+  profileType: {
+    type: String,
+    enum: ["common", "sso"],
+    default: "common",
+  },
 });
 
 const userModel = mongoose.model("users", userSchema);

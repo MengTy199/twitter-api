@@ -1,10 +1,9 @@
-const { userModel } = require("../models/user.js");
+const {userModel}  = require("../models/user.js");
 // const { tweetModel } = require("../model/tweet.js")
 const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcrypt");
 const axios = require("axios");
 const {checkIfEmailExist, signToken} = require('../common/index.js')
-const {profileType} = require("../enum/index.js")
 
 
 const getAllUsers = async (req, res) => {
@@ -84,7 +83,7 @@ const googleLogin = asyncHandler(async (req, res) => {
 
   const { access_token, id_token } = data; //for exchange profile or ex
   const response = await axios.get(
-    "https://www.googleapis.com/oauth2/v1/userinfo",
+    "https://www.googleapis.com/oauth2/v2/userinfo",
     {
       headers: { Authorization: `Bearer ${access_token}` },
     }
@@ -92,28 +91,38 @@ const googleLogin = asyncHandler(async (req, res) => {
   const userprofile= response.data
 
   // Check if email exist and create new user 
-  const ifExist = checkIfEmailExist(userprofile.email);
-  if(ifExist){
-    const existingUser = await userModel.findOne({
-      email: userprofile.email
-    });
-    const token = signToken(existingUser.id, existingUser.email, existingUser.username)
+  // const ifExist = checkIfEmailExist(userprofile.email);
+  // if(ifExist){
+  //   const existingUser = await userModel.findOne({
+  //     email: userprofile.email
+  //   });
+  //   const token = signToken(existingUser.id, existingUser.email, existingUser.username)
 
-    return res.status(200).json({token});
-  }
+  //   return res.status(200).json({token});
+  // }
+
+  // Check if user exist in database
+  if (await checkIfEmailExist(userprofile.email)) {
+    const user = await userModel.findOne({ email: userprofile.email })
+    const token = signToken(user)
+    return res.json({ token: token })
+}
 
   // register
-  const newUser = new userModel({
+  const newUser =  new userModel({
     username: userprofile.email,
     email: userprofile.email,
-    profileType: profileType.SSO
+    profileType: 'sso'
   })
 
   const result = await newUser.save()
   result.password= ''
-  const token = signToken(result.id, result.email, result.username)
+  // const token = signToken(result.id, result.email, result.username)
 
-  res.status(200).json({token});
+  // res.status(200).json({token});
+
+    const token = signToken(result)
+    return res.json({ token: token })
 });
 const handleGoogleLogin = asyncHandler(async (req, res) => {
   const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.GOOGLE_CLIENT_ID}&redirect_uri=${process.env.GOOGLE_REDIRECT}&response_type=code&scope=profile email`;
