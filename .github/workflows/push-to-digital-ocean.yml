@@ -1,0 +1,17 @@
+name: Push to DigitalOcean App Platform
+on:
+    push: 
+        branches:
+            -main
+jobs:
+    push:
+        runs-on: ubuntu-22.04
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+            - name: DigitalOcean App Platform development
+              uses: ditaialOcean/app_action@v1.1.5
+              with:
+                app_name: ${{vars.APP_NAME}}
+                token: ${{ vars.DIGITALOCEAN_AUTH_TOKEN }}
+            
