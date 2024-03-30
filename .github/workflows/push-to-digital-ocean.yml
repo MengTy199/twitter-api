@@ -11,7 +11,7 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v4
             - name: DigitalOcean App Platform development
-              uses: ditaialOcean/app_action@v1.1.5
+              uses: digitalOcean/app_action@v1.1.5
               with:
                 app_name: ${{vars.APP_NAME}}
                 token: ${{ vars.DIGITALOCEAN_AUTH_TOKEN }}
