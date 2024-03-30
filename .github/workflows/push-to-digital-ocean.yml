@@ -14,5 +14,5 @@ jobs:
               uses: digitalocean/app_action@v1.1.5  
               with:
                 app_name: ${{vars.APP_NAME}}
-                token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+                token: ${{secrets.DIGITALOCEAN_ACCESS_TOKEN}}
             
