@@ -5,6 +5,7 @@ on:
             -main
 jobs:
     push:
+        environment: prod
         runs-on: ubuntu-22.04
         steps:
             - name: Checkout
