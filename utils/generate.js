@@ -34,6 +34,5 @@ async function generate() {
     }
 }
 
-//hi git
 
 generate()
