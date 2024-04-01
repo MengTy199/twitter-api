@@ -2,7 +2,7 @@ const { faker } = require('@faker-js/faker');
 const { userModel } = require('../models/user.js')
 const { tweetModel } = require('../models/tweet.js')
 const users = 1;
-const tweets = 2;
+const tweets = 20;
 
 const dbConnect = require("../db/db.js")
 
@@ -25,7 +25,7 @@ async function generate() {
     for (let i = 0; i < tweets; i++) {
         // const randomElement = userList[Math.floor(Math.random() * userList.length)];
         let tweet = new tweetModel({
-            byUser: "6607d395ae77996cf28fd027",
+            byUser: "660aa35cbf0ade2adfe230cb",
             text: faker.lorem.paragraph(),
             createdDate: new Date()
         })
