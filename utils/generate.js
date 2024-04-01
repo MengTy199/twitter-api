@@ -25,7 +25,7 @@ async function generate() {
     for (let i = 0; i < tweets; i++) {
         // const randomElement = userList[Math.floor(Math.random() * userList.length)];
         let tweet = new tweetModel({
-            byUser: "66061c19993f26f7b880ced6",
+            byUser: "6607d395ae77996cf28fd027",
             text: faker.lorem.paragraph(),
             createdDate: new Date()
         })
@@ -34,5 +34,6 @@ async function generate() {
     }
 }
 
+//hi git
 
 generate()
