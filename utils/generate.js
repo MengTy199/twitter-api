@@ -2,7 +2,7 @@ const { faker } = require('@faker-js/faker');
 const { userModel } = require('../models/user.js')
 const { tweetModel } = require('../models/tweet.js')
 const users = 1;
-const tweets = 99;
+const tweets = 2;
 
 const dbConnect = require("../db/db.js")
 

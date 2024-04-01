@@ -4,12 +4,14 @@ const { tweetModel } = require('../models/tweet.js')
 const dbConnect = require("../db/db.js")
 
 dbConnect().catch((err) => { console.log(err) })
+
 async function linkRelation() {
-    const tweets = await tweetModel.find({})//get all tweet
-    const users = await userModel.find({}) //get all users
+    const tweets = await tweetModel.find({})
+    const users = await userModel.find({})
     users.forEach(async user => {
         const belongTweet = tweets.filter(tt => {
-            return tt.byUser.toString() == user._id
+            console.log(tt.byUser)
+            return tt.byUser.toString() == user.id
         })
         let tweetArray = []
         belongTweet.forEach(ttt => {

@@ -32,8 +32,8 @@ passport.use(jwtStrategy)
 // passport.use(googleStrategy)
 app.use("/api/users", passport.authenticate('jwt',{session:false}), user);
 app.use("/api/auth", auth)
-app.use("/api/tweets",  
-// passport.authenticate('jwt',{session:false}),verifyToken, 
+app.use("/api/tweets" ,   
+passport.authenticate('jwt',{session:false}),verifyToken, 
 tweet)
 
 

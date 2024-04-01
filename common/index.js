@@ -23,5 +23,17 @@ const signToken = (id, email, username) => {
   );
   return token;
 };
+// const signToken = (payload) => {
+//   const token = jwt.sign({
+//       id: payload.id,
+//       email: payload.email,
+//       username: payload.username
+//   }, process.env.JWT_KEY, {
+//       expiresIn: '7h',
+//       issuer: 'api.tfdevs.com',
+//       audience: 'www.tfdevs.com'
+//   })
+//   return token
+// }
 
 module.exports = { checkIfEmailExist, signToken };

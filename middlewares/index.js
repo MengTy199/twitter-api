@@ -18,9 +18,17 @@ const verifyToken = asyncHandler(async (req, res, next) => {
     }
     // console.log(token)
     token = token.replace("Bearer ", "")
-    const decoded = jwt.verify(token, process.env.SECRET)
+    // const decoded = jwt.verify(token, process.env.SECRET)
     // req.user = decoded
-    return res.json({ user: decoded })
+    // console.log(decoded._id ,"fjksdfjk")
+    // return res.json({ user: decoded })
+    try {
+        const decoded = jwt.verify(token, process.env.SECRET)
+        req.user = decoded
+        next()
+    } catch (err) {
+        res.status(401).json({ error: err.message })
+    }
     // next()
 })
 
