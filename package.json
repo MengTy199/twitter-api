@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon app.js",
-    "build": "app.js",
+    "dev1": "nodemon app.js",
+    "dev": "app.js",
+    "build": "cd frontend &&  npm install && npm run build",
     "generate": "node utils/generate.js",
     "link": "node utils/links-relationship.js",
     "test": "echo \"Error: no test specified\" && exit 1"

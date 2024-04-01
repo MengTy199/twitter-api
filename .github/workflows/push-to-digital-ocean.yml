@@ -8,26 +8,26 @@ jobs:
         environment: prod
         runs-on: ubuntu-22.04
         steps:
-            - name: Checkout
-              uses: actions/checkout@v4
-              # for frontend
-              with:
-                submodules: 'recursive'
-            - name: Setup Node.js
-              uses: actions/setup-node@v3
-              with:
-                node-version: '18'
-            - name: Install backend dependencies
-              run: npm install
-            - name: Install fronted dependencies and build
-              run: cd frontend && npm install             
-            - name: build fronted
-              run: cd frontend && npm run build
-              env:
-                NODE_ENV: prod
-                VUE_APP_ENV_GOOGLE_CALLBACK: ${{ vars.GOOGLE_CALLBACK }}
-                VUE_APP_ENV_GOOGLE_CLIENT_ID: ${{ vars.GOOGLE_CLIENT_ID }}
-                # VUE_APP_ENV_SERVER: ${{ vars.VUE_APP_SEVER }}   # not needed if you are using Netl
+            # - name: Checkout
+            #   uses: actions/checkout@v4
+            #   # for frontend
+            #   with:
+            #     submodules: 'recursive'
+            # - name: Setup Node.js
+            #   uses: actions/setup-node@v3
+            #   with:
+            #     node-version: '18'
+            # - name: Install backend dependencies
+            #   run: npm install
+            # - name: Install fronted dependencies and build
+            #   run: cd frontend && npm install             
+            # - name: build fronted
+            #   run: cd frontend && npm run build
+            #   env:
+            #     NODE_ENV: prod
+            #     VUE_APP_ENV_GOOGLE_CALLBACK: ${{ vars.GOOGLE_CALLBACK }}
+            #     VUE_APP_ENV_GOOGLE_CLIENT_ID: ${{ vars.GOOGLE_CLIENT_ID }}
+            #     # VUE_APP_ENV_SERVER: ${{ vars.VUE_APP_SEVER }}   # not needed if you are using Netl
             - name: DigitalOcean App Platform deployment
               uses: digitalocean/app_action@v1.1.5
               with:
