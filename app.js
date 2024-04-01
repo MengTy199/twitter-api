@@ -20,7 +20,7 @@ const { jwtStrategy } = require("./auth/jwtStrategy.js");
 // const { googleStrategy } = require("./auth/googleStrategy.js");
 const { verifyToken } = require("./middlewares/index.js");
 const responseTime = require('response-time')
-
+app.use(express.static("frontend/dist"))//for production
 app.use(cors())
 app.use(responseTime())
 app.use(compression())
