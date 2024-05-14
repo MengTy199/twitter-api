@@ -22,8 +22,8 @@ router.post(
 router.post("/login", loginUserValidator, validationErrorHandler, loginUser);
 
 
-router.get("/google-login",handleGoogleLogin); //like frontend
-router.get("/google",googleLogin); // like backed for exchange token
+router.get("/login-google",handleGoogleLogin); //like frontend
+router.get("/google/callback",googleLogin); // like backed for exchange token
 router.get("/me",  verifyToken);
 // router.get("/google/callback",  handleGoogleLogin);
 
