@@ -1,10 +1,9 @@
-const {userModel}  = require("../models/user.js");
+const { userModel } = require("../models/user.js");
 // const { tweetModel } = require("../model/tweet.js")
 const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcrypt");
 const axios = require("axios");
-const {checkIfEmailExist, signToken} = require('../common/index.js')
-
+const { checkIfEmailExist, signToken } = require("../common/index.js");
 
 const getAllUsers = async (req, res) => {
   const users = await userModel.find({});
@@ -15,7 +14,10 @@ const getTweetsByUserId = asyncHandler(async (req, res) => {
   const id = req.params.id;
   const users = await userModel
     .findById(id)
-    .populate("tweets")
+    .populate({
+      path: "tweets",
+      options: {sort: {createdDate: -1}}
+    })
     .select("tweets");
   res.send(users);
 });
@@ -87,42 +89,33 @@ const googleLogin = asyncHandler(async (req, res) => {
     {
       headers: { Authorization: `Bearer ${access_token}` },
     }
-  )
-  const userprofile= response.data
+  );
+  const userprofile = response.data;
 
-  // Check if email exist and create new user 
-  // const ifExist = checkIfEmailExist(userprofile.email);
-  // if(ifExist){
-  //   const existingUser = await userModel.findOne({
-  //     email: userprofile.email
-  //   });
-  //   const token = signToken(existingUser.id, existingUser.email, existingUser.username)
-
-  //   return res.status(200).json({token});
-  // }
-
-  // Check if user exist in database
-  if (await checkIfEmailExist(userprofile.email)) {
-    const user = await userModel.findOne({ email: userprofile.email })
-    const token = signToken(user)
-    return res.json({ token: token })
-}
+  // Check if email exist and create new user
+  const ifExist = await checkIfEmailExist(userprofile.email);
+  if (ifExist) {
+    const existingUser = await userModel.findOne({ email: userprofile.email });
+    const token = signToken(
+      existingUser.id,
+      existingUser.email,
+      existingUser.usernames
+    );
+    return res.status(200).json({ token });
+  }
 
   // register
-  const newUser =  new userModel({
+  const newUser = new userModel({
     username: userprofile.email,
     email: userprofile.email,
-    profileType: 'sso'
-  })
+    profileType: "sso",
+  });
 
-  const result = await newUser.save()
-  result.password= ''
-  // const token = signToken(result.id, result.email, result.username)
-
-  // res.status(200).json({token});
-
-    const token = signToken(result)
-    return res.json({ token: token })
+  const result = await newUser.save();
+  // result.password= ''
+  const token = signToken(result.id, result.email, result.username);
+  // const token = signToken(result)
+  return res.status(200).json({ token });
 });
 const handleGoogleLogin = asyncHandler(async (req, res) => {
   const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.GOOGLE_CLIENT_ID}&redirect_uri=${process.env.GOOGLE_REDIRECT}&response_type=code&scope=profile email`;

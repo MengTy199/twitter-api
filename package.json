@@ -6,7 +6,7 @@
   "scripts": {
     "dev1": "nodemon app.js",
     "dev": "app.js",
-    "build": "cd frontend &&  npm install && npm run build",
+    "build": "npm install && npm run build",
     "generate": "node utils/generate.js",
     "link": "node utils/links-relationship.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -28,10 +28,14 @@
     "mongodb": "^6.4.0",
     "mongoose": "^8.2.1",
     "morgan": "^1.10.0",
+    "multer": "^1.4.2",
+    "multer-gridfs-storage": "^5.0.2",
     "nodemon": "^3.1.0",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
-    "response-time": "^2.3.2"
+    "path": "^0.12.7",
+    "response-time": "^2.3.2",
+    "storage": "^0.2.0"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.4.1"

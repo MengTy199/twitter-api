@@ -18,7 +18,7 @@ var jsonParser = bodyParser.json()
 const passport = require("passport")
 const { jwtStrategy } = require("./auth/jwtStrategy.js");
 // const { googleStrategy } = require("./auth/googleStrategy.js");
-const { verifyToken } = require("./middlewares/index.js");
+// const { verifyToken } = require("./middlewares/index.js");
 const responseTime = require('response-time')
 app.use(express.static("frontend/dist"))//for production
 app.use(cors())
@@ -26,14 +26,13 @@ app.use(responseTime())
 app.use(compression())
 app.use(jsonParser)
 dbConnect().catch((err) => { console.log(err) })
-app.use(express.static("frontend/dist"))
+
+// app.use(express.static("frontend/dist"))
 
 passport.use(jwtStrategy)
-// passport.use(googleStrategy)
 app.use("/api/users", passport.authenticate('jwt',{session:false}), user);
 app.use("/api/auth", auth)
-app.use("/api/tweets" ,   
-passport.authenticate('jwt',{session:false}),verifyToken, 
+app.use("/api/tweets", passport.authenticate('jwt',{session:false}), 
 tweet)
 
 

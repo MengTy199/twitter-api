@@ -1,6 +1,8 @@
 const { validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 const asyncHandler = require("express-async-handler");
+const mongoose = require("mongoose")
+
 
 const validationErrorHandler = async (req, res, next) => {
   const result = validationResult(req);
@@ -22,5 +24,14 @@ const verifyToken = asyncHandler(async (req, res, next) => {
   
   // next()
 });
+const validateObjectId = (req, res, next) =>{
+  const { id } = req.params
 
-module.exports = { validationErrorHandler, verifyToken };
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ message: 'Invalid MongoDB ID' })
+  }
+
+  next()
+}
+
+module.exports = { validationErrorHandler, verifyToken, validateObjectId };
