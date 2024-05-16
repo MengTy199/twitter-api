@@ -4,9 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev1": "nodemon app.js",
-    "dev": "app.js",
-    "build": "npm install && npm run build",
+    "dev": "nodemon app.js",
     "generate": "node utils/generate.js",
     "link": "node utils/links-relationship.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -40,3 +38,4 @@
     "@faker-js/faker": "^8.4.1"
   }
 }
+

@@ -92,3 +92,5 @@ app.post('/users/:userId/followers/:followerId', async (req, res) => {
 app.listen(3000, () => {
     console.log('Server is running on port 3000');
 });
+
+// "build": "npm install && npm run build",
