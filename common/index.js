@@ -17,8 +17,8 @@ const signToken = (id, email, username) => {
     process.env.SECRET,
     {
       expiresIn: '24h',
-      issuer: "api.tfdevs.com",
-      audience: "www.tfdevs.com",
+      issuer: "api.mt.com",
+      audience: "www.mt.com",
     }
   );
   return token;
