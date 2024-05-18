@@ -7,6 +7,7 @@ const userSchema = new Schema({
   username: { type: String, required: true, unique: true },
   dataOfBirth: Date,
   password: String,
+  profileImage: String,
   followers: [{ type: mongoose.Types.ObjectId, ref: "users" }],
   followings: [{ type: mongoose.Types.ObjectId, ref: "users" }],
   tweets: [{ type: mongoose.Types.ObjectId, ref: "tweets" }],

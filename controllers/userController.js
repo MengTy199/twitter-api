@@ -17,7 +17,7 @@ const getTweetsByUserId = asyncHandler(async (req, res) => {
     .populate({
       path: "tweets",
       options: {sort: {createdDate: -1}}
-    })
+    }) 
     .select("tweets");
   res.send(users);
 });
@@ -91,30 +91,36 @@ const googleLogin = asyncHandler(async (req, res) => {
     }
   );
   const userprofile = response.data;
-
+  console.log(userprofile)
   // Check if email exist and create new user
   const ifExist = await checkIfEmailExist(userprofile.email);
   if (ifExist) {
     const existingUser = await userModel.findOne({ email: userprofile.email });
+
+    console.log(existingUser.username)
     const token = signToken(
       existingUser.id,
       existingUser.email,
-      existingUser.usernames
+      existingUser.username,
+      existingUser.profileImage
     );
+
+    console.log(token)
     return res.status(200).json({ token });
   }
 
   // register
   const newUser = new userModel({
-    username: userprofile.email,
     email: userprofile.email,
+    username: userprofile.name,
     profileType: "sso",
+    profileImage: userprofile.picture,
   });
 
   const result = await newUser.save();
   // result.password= ''
-  const token = signToken(result.id, result.email, result.username);
-  // const token = signToken(result)
+  const token = signToken(result.id, result.email, result.username, result.profileImage);
+  console.log(token)
   return res.status(200).json({ token });
 });
 const handleGoogleLogin = asyncHandler(async (req, res) => {

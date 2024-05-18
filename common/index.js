@@ -7,12 +7,13 @@ const checkIfEmailExist = async (email) => {
   return true;
 };
 
-const signToken = (id, email, username) => {
+const signToken = (id, email, name, pictureImage) => {
   const token = jwt.sign(
     {
       id: id,
       email: email,
-      username: username,
+      username: name,
+      pictureImage: pictureImage
     },
     process.env.SECRET,
     {
